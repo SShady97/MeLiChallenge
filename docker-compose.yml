@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=melichallenge
+    networks:
+      - meli_network
+
+  app:
+    build: 
+      context: ./
+    tty: true
+    stdin_open: true
+    networks:
+      - meli_network
+    ports:
+      - "8080:8080" 
+    depends_on:                                                                                    
+      - db
+
+networks:                                                                                          
+  meli_network :
+
+ 
+
+
+  
+
