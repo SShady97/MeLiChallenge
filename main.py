@@ -15,7 +15,6 @@ def main():
         user_input = input('Ingrese una opción: ')
         if user_input == '1':
             try:
-                #Al eliminar el archivo token.json perdemos los datos de la sesión activa
                 os.remove('token.json')
                 print("Sesión cerrada con éxito! \n")
             except:
