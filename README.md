@@ -9,7 +9,7 @@ INSTALACION:
         docker-compose run -i app  
     - Finalmente, se mostrará en consola el menú de la aplicación.  
     - Para correr el test se puede ejecutar el siguiente comando en consola:  
-        docker exec "id del contenedor" python -m unittest discover  
+        docker exec <id del contenedor> python -m unittest discover  
 
 FUENTES CONSULTADAS:  
     - https://developers.google.com/drive/api/quickstart/python  
