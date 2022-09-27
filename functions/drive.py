@@ -37,7 +37,7 @@ def getDrive():
         service = build('drive', 'v3', credentials=creds)
         to_private = []
         # Call the Drive v3 API
-        # Se obtienen los archivos que son de mi propiedad.
+        # Se obtienen los archivos que son propiedad del usuario actual.
         results = service.files().list(q="'me' in owners",
             pageSize=1000, fields="nextPageToken, files(permissions, mimeType, id, name, fileExtension, modifiedTime, owners, fileExtension, shared)").execute()
         items = results.get('files', [])
