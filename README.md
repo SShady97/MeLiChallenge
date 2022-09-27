@@ -4,12 +4,12 @@ INSTALACION:
     - Clonar el repositorio  
     - Ubicarse en la carpeta raiz del proyecto.  
     - Abrir la consola y ejecutar el siguiente comando:  
-        docker-compose run db  
+            docker-compose run db  
     - Una vez esté corriendo el contenedor "db", ejecutar el siguiente comando en una consola nueva:  
-        docker-compose run -i app  
+            docker-compose run -i app  
     - Finalmente, se mostrará en consola el menú de la aplicación.  
     - Para correr el test se puede ejecutar el siguiente comando en consola:  
-        docker exec <container id> python -m unittest discover  
+            docker exec "id del contenedor" python -m unittest discover  
 
 FUENTES CONSULTADAS:  
     - https://developers.google.com/drive/api/quickstart/python  
