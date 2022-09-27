@@ -49,8 +49,6 @@ def getDrive():
             if(item['mimeType'] != 'application/vnd.google-apps.shortcut' and item['mimeType'] != 'application/vnd.google-apps.folder'):
                 id_file = item['id']
                 name = item['name']
-                #Se obtiene el indice del permiso asociado al propietario del archivo.
-                owner_permission_index = ['owner' in permission['role'] for permission in item['permissions']].index(True)
                 #Se busca en el array de permisos del archivo si tiene el permiso "anyoneWithLink".
                 permission_public = ['anyoneWithLink' in permission['id'] for permission in item['permissions']]
                 owner = item['owners'][0]['displayName']
