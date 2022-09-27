@@ -45,7 +45,7 @@ def getDrive():
             print('No files found.')
             return
         for count, item in enumerate(items):
-            # Se excluyen los accesos directos de los archivos si es que existen
+            # Se excluyen las carpetas y los accesos directos de los archivos si es que existen
             if(item['mimeType'] != 'application/vnd.google-apps.shortcut' and item['mimeType'] != 'application/vnd.google-apps.folder'):
                 id_file = item['id']
                 name = item['name']
