@@ -9,6 +9,7 @@ from googleapiclient.errors import HttpError
 from functions.db.database import saveFiles, getFile, updateFile
 from functions.mail import sendEmail
 from functions.date import setToLocalTime
+from datetime import datetime
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -38,30 +39,34 @@ def getDrive():
         # Call the Drive v3 API
         # Se obtienen los archivos que son de mi propiedad.
         results = service.files().list(q="'me' in owners",
-            pageSize=1000, fields="nextPageToken, files(mimeType, id, name, fileExtension, modifiedTime, owners, fileExtension, shared)").execute()
+            pageSize=1000, fields="nextPageToken, files(permissions, mimeType, id, name, fileExtension, modifiedTime, owners, fileExtension, shared)").execute()
         items = results.get('files', [])
         if not items:
             print('No files found.')
             return
-
         for count, item in enumerate(items):
             # Se excluyen los accesos directos de los archivos si es que existen
-            if(item['mimeType'] != 'application/vnd.google-apps.shortcut'):
+            if(item['mimeType'] != 'application/vnd.google-apps.shortcut' and item['mimeType'] != 'application/vnd.google-apps.folder'):
                 id_file = item['id']
                 name = item['name']
+                #Se obtiene el indice del permiso asociado al propietario del archivo.
+                owner_permission_index = ['owner' in permission['role'] for permission in item['permissions']].index(True)
+                #Se busca en el array de permisos del archivo si tiene el permiso "anyoneWithLink".
+                permission_public = ['anyoneWithLink' in permission['id'] for permission in item['permissions']]
                 owner = item['owners'][0]['displayName']
                 modified_time = item['modifiedTime']
                 # Si el acceso del archivo esta configurado como "Cualquier persona con el enlace"
                 # Se define la variable public como True para tener registro de que el archivo fue publico
                 # Luego se cambia el acceso del archivo a "Restringido"
-                if item['shared']:
+                if True in permission_public:
                     public = True
                     to_private.append(item)
                     service.permissions().delete(
                         fileId=id_file,
                         permissionId='anyoneWithLink').execute()
+                    modified_time = datetime.utcnow().isoformat() + 'Z'
                 else:
-                    public = False 
+                    public = False
                 if 'fileExtension' in item:
                     ext = item['fileExtension']
                 else:
