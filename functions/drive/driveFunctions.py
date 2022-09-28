@@ -14,6 +14,7 @@ def getAllFolders(service):
 
 def getFilesByFolder(service, folders):
     all_files = []
+    # Se obtienen todos los archivos de cada una de las carpetas
     for folder in folders:
         files_results = service.files().list(
             q="'{}' in parents and trashed = false and mimeType != 'application/vnd.google-apps.folder' and 'me' in owners".format(
@@ -26,6 +27,7 @@ def getFilesByFolder(service, folders):
     return all_files
 
 def getRootFiles(service):
+    #Se obtienen los archivos que estan en la carpeta root del drive
     root_results = service.files().list(q="'me' in owners and 'root' in parents and mimeType != 'application/vnd.google-apps.folder' and mimeType != 'application/vnd.google-apps.shortcut'",
             pageSize=1000, fields="nextPageToken, files(permissions, mimeType, id, name, fileExtension, modifiedTime, owners, fileExtension, shared)").execute()
     root_files = root_results.get('files', [])
