@@ -2,7 +2,7 @@ from functions.db.database import getHistoricalPublicDocs
 
 def getHistorical():
     historical = getHistoricalPublicDocs()
-    if len(historical) > 0:
+    if historical:
         print('Se han encontrado {} registros dentro del historico de archivos públicos:'.format(len(historical)))
     else:
         print('No se encontraron archivos!')
